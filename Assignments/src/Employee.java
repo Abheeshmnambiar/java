@@ -3,15 +3,22 @@ public class Employee {
  private String name;
  private String id ;
  private String email;
- private long phone;
- public Employee (String name,String id,String email,long phone) {
+ private String phone;
+ public Employee (String name,String id,String email,String phone) {
 	 this.name=name;
 	 this.id =id ;
 	 this.email=email;
 	 this.phone =phone;
 	 }
  
- public String getName() {
+ public Employee() {
+	String name;
+	String id;
+	String email;
+	String phone;
+}
+
+public String getName() {
 	return this.name; 
  }
  public String getId() {
@@ -21,7 +28,7 @@ public class Employee {
  public String getEmail() {
 	 return this.email;
 	 }
- public long getPhone () {
+ public String getPhone () {
 	 return this.phone;
  }
  public void setName(String name) {
@@ -33,9 +40,12 @@ public class Employee {
  public void setEmail(String email) {
 	 this.email=email;
  }
- public void setPhone(long phone) {
+ public void setPhone(String phone) {
 	 this.phone= phone ;
  }    
-
+public String toString() {
+	return this.name+" "+this.id +" " + this.email+" "+ this.phone ;
+	 
+}
 
 }

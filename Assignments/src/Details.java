@@ -1,109 +1,128 @@
+import java.io.BufferedReader;
 import java.io.DataInputStream;
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.FileReader;
 import java.io.IOException;
+import java.io.InputStream;
+import java.io.InputStreamReader;
 import java.util.ArrayList;
+import java.util.Enumeration;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
+import java.util.Properties;
+import java.util.Scanner;
 import java.util.Set;
+
+import javax.swing.text.html.HTMLDocument.Iterator;
+
 import java.util.HashSet;
 
 public class Details {
- public static void main(String args[] ) throws Exception {
- /* Employee emp1= new Employee ("Abeesh","E0001","abeesh@gmail.com",9976767999l);
-  Employee emp2= new Employee ("Sheethal","e0002","sheethal@gmail.com",9876789879l);
-  Employee emp3= new Employee ("vaishnav","E0003","vaishnav@gmail.com",9845764576l);
-  Employee emp4= new Employee ("John", "E0004"  ,"john@gmail.com",9845321243l);
-  Employee emp5= new Employee ("John","e0005","john12345@gmail.com",8767456351l);
-  	
-  System.out.println(emp1.getName());
-  System.out.println(emp1.getId());
-  System.out.println(emp1.getEmail());
-  System.out.println(emp1.getPhone());
-  
-  System.out.println(emp2.getName());
-  System.out.println(emp2.getId());
-  System.out.println(emp2.getEmail());
-  System.out.println(emp2.getPhone()); 
-  
-  System.out.println(emp3.getName());
-  System.out.println(emp3.getId());
-  System.out.println(emp3.getEmail());
-  System.out.println(emp3.getPhone());
-  
-  System.out.println(emp4.getName());
-  System.out.println(emp4.getId());
-  System.out.println(emp4.getEmail());
-  System.out.println(emp4.getPhone());
-  
-  System.out.println(emp5.getName()); 
-  System.out.println(emp5.getId());
-  System.out.println(emp5.getEmail());
-  System.out.println(emp5.getPhone());
-  */
+ 
+ 
   
 
  
-	 List<Employee> employee = new ArrayList<>();
-     employee.add(new Employee("Abeesh","E0001","abeesh@gmail.com",9976767999l)) ;
-     employee.add(new Employee ("Sheethal","e0002","sheethal@gmail.com",9876789879l));
-     employee.add(new Employee("vaishnav","E0001","vaishnav@gmail.com",9845764576l));  		 
-     employee.add(new Employee("John", "E0004"  ,"john@gmail.com",9845321243l));  
-   	 employee.add(new Employee("John","e0005","john12345@gmail.com",8767456351l));
-     employee.forEach(Employee -> {
-         System.out.println("Name : " + Employee.getName() + ", Id : " + Employee.getId()+",email:" + Employee.getEmail() + ",phone:" + Employee.getPhone() );
-     });
-      
-     /*searchId("e0001",employee);     
-     searchName("Sheethal",);*/
-     DataInputStream dis= new DataInputStream(System.in) ;
-     System.out.println("enter id or name");
-     String value=dis.readLine();
-     exceptionId(value,employee);
-     searchValue(value,employee);
-     
- }
-
-
-
-public static void searchValue(String value,  List<Employee> emplist) {
-	boolean x=false;
 	
-	for(Employee emp: emplist)
-	{ 
-		if (value.equalsIgnoreCase(emp.getId()) || (value.equals(emp.getName())))
-	{	
-			System.out.println("The details of the requested is \n"+ "Name="+ emp.getName() +"\n id="+ emp.getId()+"\nemail="+emp.getEmail()+"\nph="+emp.getPhone() );
-	         x=true;
-	}
-	    
+static
+{
+		 
+
+		 HashMap<String, Employee>map = new HashMap();
+
+		 
+
+
+		 try {
+
+		 String fileName="C:\\office\\emp1.properties";
+		 Properties prop = new Properties();
+		 FileInputStream fileInput = new FileInputStream(fileName);
+		 prop.load(fileInput);
+
+
+
+		// Employee E = new Employee();
+		 Employee emp1=new Employee(prop.getProperty("emp1.name"),prop.getProperty("emp1.id"),prop.getProperty("emp1.email"),prop.getProperty("emp1.phone"));
+		 Employee emp2=new Employee(prop.getProperty("emp2.name"),prop.getProperty("emp2.id"),prop.getProperty("emp2.email"),prop.getProperty("emp2.phone"));
+		 Employee emp3=new Employee(prop.getProperty("emp3.name"),prop.getProperty("emp3.id"),prop.getProperty("emp3.email"),prop.getProperty("emp3.phone"));
+		 Employee emp4=new Employee(prop.getProperty("emp4.name"),prop.getProperty("emp4.id"),prop.getProperty("emp4.email"),prop.getProperty("emp4.phone"));
+		 Employee emp5=new Employee(prop.getProperty("emp5.name"),prop.getProperty("emp5.id"),prop.getProperty("emp5.email"),prop.getProperty("emp5.phone"));
+		 
+		 
+		 
+		map.put(prop.getProperty("emp1.id"),emp1)  ;
+		map.put(prop.getProperty("emp2.id"),emp2)  ;
+		map.put(prop.getProperty("emp3.id"),emp3)  ;
+		map.put(prop.getProperty("emp4.id"),emp4)  ;
+		map.put(prop.getProperty("emp5.id"),emp5)  ;
+		 
+		 
+
+		 System.out.println(map);
+
+
+		 }
+		 catch(FileNotFoundException e){
+
+		 e.printStackTrace();
+
+		 }
+		 
+
+		 catch(IOException e) {
+		 e.printStackTrace();
+		 }
+
+		 search(map);
+		 
+}
+
+
+		 
+
 		
-	};
-	if (!x){
-		System.out.println("invalid data");
-	}
-}
-	
 
-public static void exceptionId(String value, List<Employee> id) throws Exception {
-	
 
-    Set<String> empp= new HashSet<String>();
-    
-    for (Employee emp : id) {
-
-        if (empp.contains(emp.getId())) {
-            throw new Exception("id already exisist");
-        } 
-        else {
-            empp.add(emp.getId());
-	    
+public static void search(HashMap<String,Employee>map) {
+		Scanner scnr=new Scanner (System.in);  
+		System.out.println("enter name or id ");
+		String idOrName =scnr.nextLine();
 		
-	
-}
-}
-}
+		for(Map.Entry<String,Employee>entry:map.entrySet()) {
+			String key= entry.getKey();
+			Employee value=entry.getValue();
+			
+			if (idOrName.equalsIgnoreCase(key) || idOrName.equalsIgnoreCase(value.getName())) {
+				System.out.println(map.get(key));
+			}
+		}
 }
 
+
+public static void main(String args[]) throws IOException {
+	
+}
  
+} 
  
- 
- 
- 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
