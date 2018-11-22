@@ -32,7 +32,7 @@ public String getName() {
 	 return this.phone;
  }
  public void setName(String name) {
-	 this.name=name;
+	 this.name=name; 
  }
  public void setId(String id ) {
 	 this.id=id;

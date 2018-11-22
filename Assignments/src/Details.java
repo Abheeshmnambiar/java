@@ -99,7 +99,7 @@ public static void search(HashMap<String,Employee>map) {
 			if (idOrName.equalsIgnoreCase(key) || idOrName.equalsIgnoreCase(value.getName())) {
 				System.out.println(map.get(key));
 			}
-		}
+		} 
 }
 
 
